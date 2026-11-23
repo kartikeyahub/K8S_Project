@@ -174,7 +174,7 @@ POSTGRES_PASSWORD=REPLACE_WITH_STRONG_ADMIN_PASSWORD
 PGDATA=/var/lib/postgresql/data/pgdata
 ```
 
-Replace the administrator password with a strong, unique password.
+### Replace the administrator password with a strong, unique password.
 
 Save the file and protect it:
 
@@ -230,7 +230,7 @@ SQL
 echo "Stage and Production databases created successfully."
 ```
 
-Replace the two application passwords with strong, unique passwords.
+### Replace the two application passwords with strong, unique passwords.
 
 Save the file.
 
