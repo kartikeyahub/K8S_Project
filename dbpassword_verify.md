@@ -118,21 +118,9 @@ The `.env` administrator password is not needed by the application.
 
 
 
-## **Step 1: Exit the temporary Kubernetes Pod**
 
-Your current prompt is:
 
-```
-root@proddb-auth-test:/#
-```
-
-Run:
-
-```
-exit
-```
-
-## **Step 2: Log in to the proddb Ubuntu VM**
+## **Step 1: Log in to the proddb Ubuntu VM**
 
 On the `proddb` VM, run:
 
@@ -150,7 +138,7 @@ docker exec -it proddb-postgres \
   psql -U postgres -d postgres
 ```
 
-## **Step 3: Check the Stage user**
+## **Step 2: Check the Stage user**
 
 Inside PostgreSQL:
 
@@ -178,7 +166,7 @@ Expected:
 | stage_user_db | stage_app |
 | stage_item_db | stage_app |
 
-## **Step 4: Reset the Stage password**
+## **Step 3: Reset the Stage password**
 
 Inside the PostgreSQL prompt, execute:
 
@@ -196,7 +184,7 @@ Then exit:
 
 Do not share this password in chat.
 
-## **Step 5: Test authentication again from Kubernetes**
+## **Step 4: Test authentication again from Kubernetes**
 
 On the Kubernetes master, start a temporary Pod:
 
