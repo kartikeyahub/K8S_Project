@@ -1,6 +1,122 @@
-The network connection is working because PostgreSQL is responding at `192.168.56.15:5432`. The current issue is **PostgreSQL password authentication for&#x20;**`stage_app`.
+Good question. We are entering passwords in **two places because PostgreSQL has two different types of users**:
 
-Your second attempt failed even after entering a password, so let's reset the password on the `proddb` server and test again.
+1. **PostgreSQL administrator (**`postgres`**)** – manages the PostgreSQL server.
+2. **Application users (**`dev_app`**,&#x20;**`test_app`**,&#x20;**`qa_app`**)** – allow our microservices to connect to their respective databases.
+
+They have different responsibilities and different passwords.
+
+## **1.&#x20;**`.env`**&#x20;– PostgreSQL administrator password**
+
+```
+POSTGRES_VERSION=16
+POSTGRES_USER=postgres
+POSTGRES_PASSWORD=REPLACE_WITH_STRONG_ADMIN_PASSWORD
+PGDATA=/var/lib/postgresql/data/pgdata
+```
+
+Here:
+
+- `POSTGRES_USER=postgres` is the PostgreSQL administrator username.
+- `POSTGRES_PASSWORD` is the administrator's password.
+- This account is used to initialize and administer PostgreSQL.
+
+For example, replace:
+
+```
+POSTGRES_PASSWORD=REPLACE_WITH_STRONG_ADMIN_PASSWORD
+```
+
+with a strong password that you create.
+
+This password is used for administrative access, not for your Dev, Test or QA microservices.
+
+## **2.&#x20;**`init/01-init-databases.sh`**&#x20;– Application user passwords**
+
+```
+CREATE USER dev_app WITH PASSWORD 'REPLACE_DEV_PASSWORD';
+CREATE USER test_app WITH PASSWORD 'REPLACE_TEST_PASSWORD';
+CREATE USER qa_app WITH PASSWORD 'REPLACE_QA_PASSWORD';
+```
+
+These commands create three separate application users.
+
+Replace the placeholders with passwords you choose:
+
+| Username   | Password purpose          | Database access |
+| ---------- | ------------------------- | --------------- |
+| `dev_app`  | Dev application password  | Dev databases   |
+| `test_app` | Test application password | Test databases  |
+| `qa_app`   | QA application password   | QA databases    |
+
+For example, you could choose three different strong passwords.
+
+The database ownership is then assigned:
+
+```
+CREATE DATABASE dev_auth_db OWNER dev_app;
+CREATE DATABASE dev_user_db OWNER dev_app;
+CREATE DATABASE dev_item_db OWNER dev_app;
+```
+
+This means `dev_app` owns all three Dev databases.
+
+The same arrangement applies to Test and QA.
+
+## **3. Why do we need two sets of passwords?**
+
+**PostgreSQL administrator**
+
+**postgres**
+
+Administrator password comes from `.env`
+
+Creates users and databases; manages PostgreSQL.
+
+**Application users created by the initialization script**
+
+**dev_app**
+
+3 Dev DBs
+
+**test_app**
+
+3 Test DBs
+
+**qa_app**
+
+3 QA DBs
+
+Each application user has its own password, separate from the administrator password.
+
+This separation is important for security. Your Dev microservice should connect using `dev_app`, not the PostgreSQL administrator account.
+
+## **4. When does each password get used?**
+
+| Operation                       | Which password?                   |
+| ------------------------------- | --------------------------------- |
+| Initialize PostgreSQL container | `POSTGRES_PASSWORD`               |
+| Create application users        | Administrator access (`postgres`) |
+| Dev microservice connection     | `dev_app` password                |
+| Test microservice connection    | `test_app` password               |
+| QA microservice connection      | `qa_app` password                 |
+
+The initialization script runs automatically when PostgreSQL initializes a **new, empty data directory**. It uses the administrator account to create the application users and databases.
+
+**Important:** If you change the initialization script later and restart the container, PostgreSQL will not automatically recreate users or change their passwords. You must update existing users separately.
+
+## **5. How does Kubernetes use these passwords?**
+
+For example, Dev:
+
+- `dev_app` username goes into `dev-db-secret`.
+- The password you assigned to `dev_app` goes into `dev-db-secret`.
+- Your Dev microservice reads those credentials from the Kubernetes Secret.
+
+The `.env` administrator password is not needed by the application.
+
+**In short:** You are not entering the same password twice. One password is for the PostgreSQL administrator; the other three are for application users. This is the correct separation for our Dev/Test/QA database setup.
+
+
 
 ## **Step 1: Exit the temporary Kubernetes Pod**
 
