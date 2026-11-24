@@ -1,0 +1,208 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#101827">
+  <meta name="description" content="KartikeyaSoft microservices lab console for authentication, user profiles and item management.">
+  <title>KartikeyaSoft | Microservices Console</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar" aria-label="Main navigation">
+      <a class="brand" href="#overview" aria-label="KartikeyaSoft Microservices Lab home">
+        <span class="brand-mark" aria-hidden="true">
+          <svg viewBox="0 0 40 40" fill="none">
+            <path d="M20 3.5 35 12v16L20 36.5 5 28V12L20 3.5Z" stroke="currentColor" stroke-width="1.8"/>
+            <path d="M13 26V14h3.2v4.6l4.7-4.6h4.4l-5.5 5.2 5.9 6.8h-4.3l-4.1-4.9-1.1 1V26H13Z" fill="currentColor"/>
+          </svg>
+        </span>
+        <span class="brand-copy">
+          <strong>KartikeyaSoft</strong>
+          <small>MICROSERVICES LAB</small>
+        </span>
+      </a>
+
+      <div class="sidebar-label">WORKSPACE</div>
+      <nav class="main-nav">
+        <a class="nav-link is-active" href="#overview">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="3.5" width="7" height="7" rx="1.5"/><rect x="13.5" y="3.5" width="7" height="7" rx="1.5"/><rect x="3.5" y="13.5" width="7" height="7" rx="1.5"/><rect x="13.5" y="13.5" width="7" height="7" rx="1.5"/></svg>
+          <span>Overview</span>
+        </a>
+        <a class="nav-link" href="#authentication">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="3.5"/><path d="M5 20c.8-3.2 3.1-4.8 7-4.8s6.2 1.6 7 4.8"/></svg>
+          <span>Authentication</span>
+        </a>
+        <a class="nav-link" href="#users">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="8" r="3"/><path d="M3.5 19c.5-2.8 2.3-4.2 5.5-4.2s5 1.4 5.5 4.2M16 5.5a3 3 0 0 1 0 5.8M17 15c2.1.4 3.3 1.7 3.7 4"/></svg>
+          <span>User profiles</span>
+        </a>
+        <a class="nav-link" href="#items">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 3 8.5 4.5v9L12 21l-8.5-4.5v-9L12 3Z"/><path d="m3.8 7.7 8.2 4.4 8.2-4.4M12 12.1V21M7.7 5.3l8.4 4.5"/></svg>
+          <span>Items</span>
+        </a>
+      </nav>
+
+      <div class="sidebar-spacer"></div>
+      <div class="sidebar-note">
+        <span class="note-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24"><path d="M12 3.5 19 6v5.2c0 4.4-2.4 7.5-7 9.3-4.6-1.8-7-4.9-7-9.3V6l7-2.5Z"/><path d="m9 12 2 2 4-4"/></svg>
+        </span>
+        <strong>API workspace</strong>
+        <p>Send requests to the configured microservice API routes and inspect their responses.</p>
+      </div>
+      <div class="sidebar-footer">KartikeyaSoft <span>•</span> Lab Console</div>
+    </aside>
+
+    <main class="main-content">
+      <header class="topbar">
+        <div class="breadcrumb"><span>Workspace</span><span class="breadcrumb-separator">/</span><strong>Microservices</strong></div>
+        <div class="topbar-meta">
+          <span class="connection-label"><span class="connection-dot"></span> API console</span>
+          <span class="topbar-divider"></span>
+          <span class="topbar-caption">REST interface</span>
+        </div>
+      </header>
+
+      <div class="page-content">
+        <section class="hero" id="overview">
+          <div class="hero-content">
+            <div class="eyebrow"><span class="eyebrow-line"></span> MICROSERVICES WORKSPACE</div>
+            <h1>Build. Test. <span>Connect.</span></h1>
+            <p class="hero-description">A single workspace to exercise authentication, manage user profiles and work with your item catalogue.</p>
+            <div class="hero-tags">
+              <span><i class="tag-dot tag-blue"></i> Auth service</span>
+              <span><i class="tag-dot tag-violet"></i> User service</span>
+              <span><i class="tag-dot tag-mint"></i> Item service</span>
+            </div>
+          </div>
+          <div class="flow-card" aria-label="Request flow">
+            <div class="flow-card-heading">REQUEST FLOW</div>
+            <div class="flow-step"><span class="flow-icon browser-icon">B</span><span><strong>Frontend</strong><small>Web interface</small></span></div>
+            <div class="flow-connector"><span></span></div>
+            <div class="flow-step"><span class="flow-icon gateway-icon">N</span><span><strong>API gateway</strong><small>Configured /api routes</small></span></div>
+            <div class="flow-connector"><span></span></div>
+            <div class="flow-step"><span class="flow-icon database-icon">DB</span><span><strong>Microservices</strong><small>Auth · User · Item</small></span></div>
+          </div>
+          <div class="hero-orb hero-orb-one"></div>
+          <div class="hero-orb hero-orb-two"></div>
+        </section>
+
+        <section class="service-overview" aria-label="Available services">
+          <article class="overview-card">
+            <span class="overview-icon overview-auth"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="3.5"/><path d="M5 20c.8-3.2 3.1-4.8 7-4.8s6.2 1.6 7 4.8"/></svg></span>
+            <div><span class="overview-name">Authentication</span><strong>Register &amp; login</strong><small>POST /api/auth</small></div>
+            <span class="overview-arrow">↗</span>
+          </article>
+          <article class="overview-card">
+            <span class="overview-icon overview-users"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="8" r="3"/><path d="M3.5 19c.5-2.8 2.3-4.2 5.5-4.2s5 1.4 5.5 4.2M16 5.5a3 3 0 0 1 0 5.8M17 15c2.1.4 3.3 1.7 3.7 4"/></svg></span>
+            <div><span class="overview-name">User profiles</span><strong>Create &amp; list users</strong><small>/api/users</small></div>
+            <span class="overview-arrow">↗</span>
+          </article>
+          <article class="overview-card">
+            <span class="overview-icon overview-items"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 3 8.5 4.5v9L12 21l-8.5-4.5v-9L12 3Z"/><path d="m3.8 7.7 8.2 4.4 8.2-4.4M12 12.1V21"/></svg></span>
+            <div><span class="overview-name">Item catalogue</span><strong>Add &amp; list items</strong><small>/api/items</small></div>
+            <span class="overview-arrow">↗</span>
+          </article>
+        </section>
+
+        <div class="section-heading">
+          <div>
+            <span class="section-kicker">API OPERATIONS</span>
+            <h2>Service console</h2>
+            <p>Submit a request and review the response returned by the API.</p>
+          </div>
+          <span class="method-legend"><span class="method-post">POST</span> Create / submit <span class="method-get">GET</span> Retrieve</span>
+        </div>
+
+        <section class="service-grid" aria-label="Microservice operations">
+          <article class="service-card auth-card" id="authentication">
+            <div class="card-header">
+              <div class="card-title-wrap">
+                <span class="service-icon auth-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="3.5"/><path d="M5 20c.8-3.2 3.1-4.8 7-4.8s6.2 1.6 7 4.8"/></svg></span>
+                <div><span class="card-kicker">SERVICE 01</span><h3>Authentication</h3></div>
+              </div>
+              <span class="route-badge">/api/auth</span>
+            </div>
+            <p class="card-description">Register a new account or sign in with an existing username and password.</p>
+            <div class="form-grid auth-fields">
+              <div class="field-group"><label for="username">Username</label><input id="username" name="username" type="text" placeholder="e.g. alex" autocomplete="username" required></div>
+              <div class="field-group"><label for="email">Email address</label><input id="email" name="email" type="email" placeholder="name@example.com" autocomplete="email" required></div>
+              <div class="field-group password-field"><label for="password">Password</label><div class="password-wrap"><input id="password" name="password" type="password" placeholder="Enter password" autocomplete="current-password" required><button class="password-toggle" id="togglePassword" type="button" aria-label="Show password" aria-pressed="false">Show</button></div></div>
+            </div>
+            <div class="action-row">
+              <button class="button button-primary" id="registerBtn" type="button"><span class="button-icon">＋</span> Register</button>
+              <button class="button button-secondary" id="loginBtn" type="button"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M10 5H5.5A1.5 1.5 0 0 0 4 6.5v11A1.5 1.5 0 0 0 5.5 19H10M14 8l4 4-4 4M18 12H9"/></svg> Login</button>
+              <span class="action-hint">Login fills the User ID after a successful response.</span>
+            </div>
+            <div class="result-panel" id="authResultPanel" data-state="idle">
+              <div class="result-toolbar"><span class="result-label"><i></i><span id="authStatus">Response preview</span></span><button class="copy-button" type="button" data-copy-target="authResult">Copy</button></div>
+              <pre id="authResult" aria-live="polite">Your authentication response will appear here.</pre>
+            </div>
+          </article>
+
+          <article class="service-card" id="users">
+            <div class="card-header">
+              <div class="card-title-wrap">
+                <span class="service-icon user-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="8" r="3"/><path d="M3.5 19c.5-2.8 2.3-4.2 5.5-4.2s5 1.4 5.5 4.2M16 5.5a3 3 0 0 1 0 5.8M17 15c2.1.4 3.3 1.7 3.7 4"/></svg></span>
+                <div><span class="card-kicker">SERVICE 02</span><h3>User Profile</h3></div>
+              </div>
+              <span class="route-badge">/api/users</span>
+            </div>
+            <p class="card-description">Create a profile linked to an authenticated user or retrieve the user list.</p>
+            <div class="form-grid user-fields">
+              <div class="field-group"><label for="userId">Auth User ID</label><input id="userId" name="userId" type="number" min="1" step="1" placeholder="Login user ID" required></div>
+              <div class="field-group"><label for="firstName">First name</label><input id="firstName" name="firstName" type="text" placeholder="First name" required></div>
+              <div class="field-group"><label for="lastName">Last name</label><input id="lastName" name="lastName" type="text" placeholder="Last name" required></div>
+              <div class="field-group"><label for="phone">Phone</label><input id="phone" name="phone" type="tel" placeholder="Phone number" required></div>
+              <div class="field-group field-span-two"><label for="address">Address</label><input id="address" name="address" type="text" placeholder="Street, city or address" required></div>
+            </div>
+            <div class="action-row">
+              <button class="button button-primary" id="createUserBtn" type="button"><span class="button-icon">＋</span> Create profile</button>
+              <button class="button button-secondary" id="loadUsersBtn" type="button"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg> List users</button>
+            </div>
+            <div class="result-panel" id="userResultPanel" data-state="idle">
+              <div class="result-toolbar"><span class="result-label"><i></i><span id="userStatus">Response preview</span></span><button class="copy-button" type="button" data-copy-target="userResult">Copy</button></div>
+              <pre id="userResult" aria-live="polite">User profile results will appear here.</pre>
+            </div>
+          </article>
+
+          <article class="service-card" id="items">
+            <div class="card-header">
+              <div class="card-title-wrap">
+                <span class="service-icon item-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 3 8.5 4.5v9L12 21l-8.5-4.5v-9L12 3Z"/><path d="m3.8 7.7 8.2 4.4 8.2-4.4M12 12.1V21"/></svg></span>
+                <div><span class="card-kicker">SERVICE 03</span><h3>Items</h3></div>
+              </div>
+              <span class="route-badge">/api/items</span>
+            </div>
+            <p class="card-description">Add an item to the catalogue or retrieve the current list of items.</p>
+            <div class="form-grid item-fields">
+              <div class="field-group"><label for="itemName">Item name</label><input id="itemName" name="itemName" type="text" placeholder="e.g. Notebook" required></div>
+              <div class="field-group"><label for="itemDescription">Description</label><input id="itemDescription" name="itemDescription" type="text" placeholder="Short description" required></div>
+              <div class="field-group"><label for="itemPrice">Price</label><div class="input-prefix"><span>₹</span><input id="itemPrice" name="itemPrice" type="number" min="0" step="0.01" placeholder="0.00" required></div></div>
+              <div class="field-group"><label for="itemQuantity">Quantity</label><input id="itemQuantity" name="itemQuantity" type="number" min="0" step="1" placeholder="0" required></div>
+            </div>
+            <div class="action-row">
+              <button class="button button-primary" id="createItemBtn" type="button"><span class="button-icon">＋</span> Add item</button>
+              <button class="button button-secondary" id="loadItemsBtn" type="button"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg> List items</button>
+            </div>
+            <div class="result-panel" id="itemResultPanel" data-state="idle">
+              <div class="result-toolbar"><span class="result-label"><i></i><span id="itemStatus">Response preview</span></span><button class="copy-button" type="button" data-copy-target="itemResult">Copy</button></div>
+              <pre id="itemResult" aria-live="polite">Item results will appear here.</pre>
+            </div>
+          </article>
+        </section>
+
+        <footer class="page-footer">
+          <span>© <span id="currentYear"></span> KartikeyaSoft</span>
+          <span>Microservices Lab <i></i> Frontend console</span>
+        </footer>
+      </div>
+    </main>
+  </div>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <script src="/js/app.js" defer></script>
+</body>
+</html>
