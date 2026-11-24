@@ -1,0 +1,17 @@
+External PostgreSQL configuration installed.
+
+Environment: {{ .Values.environment }}
+PostgreSQL Host: {{ .Values.database.host }}
+PostgreSQL Port: {{ .Values.database.port }}
+
+Existing credentials Secret: {{ .Values.existingSecret }}
+
+ConfigMaps:
+  {{ include "external-postgres.fullname" . }}-auth
+  {{ include "external-postgres.fullname" . }}-user
+  {{ include "external-postgres.fullname" . }}-item
+
+The application Deployments must reference the corresponding ConfigMap
+and map DB_USERNAME and DB_PASSWORD from the existing Secret to:
+  SPRING_DATASOURCE_USERNAME
+  SPRING_DATASOURCE_PASSWORD

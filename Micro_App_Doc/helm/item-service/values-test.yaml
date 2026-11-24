@@ -1,0 +1,5 @@
+environment: test
+
+database:
+  configMapName: external-postgres-item
+  existingSecret: test-db-secret

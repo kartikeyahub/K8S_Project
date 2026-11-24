@@ -1,0 +1,5 @@
+environment: qa
+
+database:
+  configMapName: external-postgres-user
+  existingSecret: qa-db-secret

@@ -1,0 +1,11 @@
+environment: qa
+
+database:
+  host: "192.168.56.14"
+  port: 5432
+
+  authDatabase: "qa_auth_db"
+  userDatabase: "qa_user_db"
+  itemDatabase: "qa_item_db"
+
+existingSecret: "qa-db-secret"

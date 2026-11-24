@@ -1,0 +1,40 @@
+replicaCount: 1
+
+image:
+  repository: kartikeyasoft/user-service
+  tag: latest
+  pullPolicy: Always
+
+containerPort: 8081
+
+service:
+  type: ClusterIP
+  port: 8081
+
+database:
+  configMapName: external-postgres-user
+  urlKey: SPRING_DATASOURCE_URL
+
+  existingSecret: dev-db-secret
+  usernameKey: DB_USERNAME
+  passwordKey: DB_PASSWORD
+
+jpa:
+  ddlAuto: update
+
+resources:
+  requests:
+    cpu: 100m
+    memory: 256Mi
+  limits:
+    cpu: 500m
+    memory: 768Mi
+
+probes:
+  startup:
+    periodSeconds: 10
+    failureThreshold: 30
+  readiness:
+    periodSeconds: 10
+  liveness:
+    periodSeconds: 20

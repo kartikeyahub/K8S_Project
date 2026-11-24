@@ -1,0 +1,11 @@
+environment: test
+
+database:
+  host: "192.168.56.14"
+  port: 5432
+
+  authDatabase: "test_auth_db"
+  userDatabase: "test_user_db"
+  itemDatabase: "test_item_db"
+
+existingSecret: "test-db-secret"

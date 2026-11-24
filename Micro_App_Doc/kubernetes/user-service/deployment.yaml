@@ -1,0 +1,77 @@
+apiVersion: apps/v1
+kind: Deployment
+
+metadata:
+  name: user-service
+  namespace: micro-app
+
+spec:
+  replicas: 1
+
+  selector:
+    matchLabels:
+      app: user-service
+
+  template:
+    metadata:
+      labels:
+        app: user-service
+
+    spec:
+      containers:
+        - name: user-service
+
+          image: kartikeyasoft/user-service:latest
+
+          imagePullPolicy: Always
+
+          ports:
+            - name: http
+              containerPort: 8081
+
+          env:
+            - name: SERVER_PORT
+              value: "8081"
+
+            - name: SPRING_DATASOURCE_URL
+              value: "jdbc:postgresql://postgres:5432/user_db"
+
+            - name: SPRING_DATASOURCE_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-secret
+                  key: APP_DB_USERNAME
+
+            - name: SPRING_DATASOURCE_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-secret
+                  key: APP_DB_PASSWORD
+
+            - name: SPRING_JPA_HIBERNATE_DDL_AUTO
+              value: "update"
+
+          resources:
+            requests:
+              cpu: 100m
+              memory: 256Mi
+
+            limits:
+              cpu: 500m
+              memory: 768Mi
+
+          startupProbe:
+            tcpSocket:
+              port: http
+            periodSeconds: 10
+            failureThreshold: 30
+
+          readinessProbe:
+            tcpSocket:
+              port: http
+            periodSeconds: 10
+
+          livenessProbe:
+            tcpSocket:
+              port: http
+            periodSeconds: 20

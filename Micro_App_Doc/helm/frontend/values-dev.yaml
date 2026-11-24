@@ -1,0 +1,6 @@
+environment: dev
+
+service:
+  type: NodePort
+  port: 80
+  nodePort: 30080

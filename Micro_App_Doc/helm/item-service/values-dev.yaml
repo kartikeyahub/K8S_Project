@@ -1,0 +1,5 @@
+environment: dev
+
+database:
+  configMapName: external-postgres-item
+  existingSecret: dev-db-secret
