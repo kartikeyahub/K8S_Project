@@ -397,6 +397,48 @@ database system is ready to accept connections
 
 ## 11. Verify PostgreSQL databases
 
+
+This error is expected because your `testdb` VM does not have the PostgreSQL client (`psql`) installed on its Linux host.
+
+However, your PostgreSQL Docker container already has `psql`.
+
+Let's use Docker to run the authentication test without installing anything.
+
+### **Step 11.1: Check your PostgreSQL container**
+
+On `ks@testdb`:
+
+```
+docker compose ps
+```
+
+### **Step 11.2: Execute the password verification inside the container**
+
+Assuming your Docker Compose service is named `postgres`, execute:
+
+```
+docker compose exec postgres bash -c \
+"PGPASSWORD='devdb@859' psql \
+-h 127.0.0.1 \
+-p 5432 \
+-U dev_app \
+-d dev_item_db \
+-c 'SELECT current_database(), current_user;'"
+```
+
+### **Step 11.3: Expected output**
+
+```
+ current_database | current_user
+------------------+-------------
+ dev_item_db      | dev_app
+(1 row)
+```
+
+Authentication successful
+This confirms that the password is accepted by PostgreSQL over TCP.
+
+
 Connect to PostgreSQL as administrator:
 
 ```
