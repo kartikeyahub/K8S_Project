@@ -1,5 +1,3 @@
-Here is a ready-to-use `README.md` section covering the most important Helm commands for your Kubernetes projects, including install, upgrade, uninstall, list, revisions, history, and rollback.
-
 # Helm – Important Commands Cheat Sheet
 
 ## 1. Helm Version
