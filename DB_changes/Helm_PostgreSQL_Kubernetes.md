@@ -42,36 +42,49 @@ Database provisioning and application deployments are separate tasks.
 
 ------------------------------------------------------------------------
 
-## 2. Architecture and environment details
 
-### 2.1 External PostgreSQL server
+## **2. Architecture and Environment Details**
 
-  Component            Value
-  -------------------- -----------------
-  VM name              `testdb`
-  Operating system     Ubuntu
-  IP address           `192.168.56.14`
-  PostgreSQL port      `5432`
-  PostgreSQL version   `16`
+### **2.1 External PostgreSQL Server**
 
-The Kubernetes nodes and Pods must be able to reach `192.168.56.14` over
-TCP port `5432`.
+The PostgreSQL database server runs independently on an Ubuntu VirtualBox VM. Kubernetes applications connect to this external server using its IP address and PostgreSQL port.
 
-### 2.2 Environment mapping
+| Component          | Value           |
+| ------------------ | --------------- |
+| VM Name            | `testdb`        |
+| Operating System   | Ubuntu          |
+| IP Address         | `192.168.56.14` |
+| PostgreSQL Port    | `5432`          |
+| PostgreSQL Version | `16`            |
 
-  -------------------------------------------------------------------------------------------------------------------
-  Environment   Kubernetes         Database     Auth database    User database    Item database    Existing Secret
-                namespace          user                                                            
-  ------------- ------------------ ------------ ---------------- ---------------- ---------------- ------------------
-  Dev           `micro-app-dev`    `dev_app`    `dev_auth_db`    `dev_user_db`    `dev_item_db`    `dev-db-secret`
+**Connectivity requirement:**
 
-  Test          `micro-app-test`   `test_app`   `test_auth_db`   `test_user_db`   `test_item_db`   `test-db-secret`
+All Kubernetes nodes and application Pods must be able to communicate with the external PostgreSQL server at:
 
-  QA            `micro-app-qa`     `qa_app`     `qa_auth_db`     `qa_user_db`     `qa_item_db`     `qa-db-secret`
-  -------------------------------------------------------------------------------------------------------------------
+```
+Host: 192.168.56.14
+Port: 5432
+Protocol: TCP
+```
 
-All three environments connect to the same PostgreSQL host and port.
-They use separate database names and database users.
+### **2.2 Environment Mapping**
+
+We maintain three separate environments: Dev, Test and QA.
+
+Each environment has:
+
+- Its own Kubernetes namespace.
+- Its own PostgreSQL database user.
+- Three dedicated databases for Auth, User and Item services.
+- Its own Kubernetes Secret containing database credentials.
+
+| Environment | Kubernetes Namespace | Database User | Auth Database  | User Database  | Item Database  | Existing Secret  |
+| ----------- | -------------------- | ------------- | -------------- | -------------- | -------------- | ---------------- |
+| Dev         | `micro-app-dev`      | `dev_app`     | `dev_auth_db`  | `dev_user_db`  | `dev_item_db`  | `dev-db-secret`  |
+| Test        | `micro-app-test`     | `test_app`    | `test_auth_db` | `test_user_db` | `test_item_db` | `test-db-secret` |
+| QA          | `micro-app-qa`       | `qa_app`      | `qa_auth_db`   | `qa_user_db`   | `qa_item_db`   | `qa-db-secret`   |
+
+**Important:** All three environments connect to the same external PostgreSQL server (`192.168.56.14:5432`). However, each environment uses separate database names, database credentials and Kubernetes namespaces to maintain environment isolation.
 
 ### 2.3 Configuration flow
 
