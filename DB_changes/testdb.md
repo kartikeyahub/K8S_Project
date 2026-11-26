@@ -919,6 +919,51 @@ jdbc:postgresql://192.168.56.14:5432/dev_auth_db
 ```
 
 ---
+### 18.1 Check the existing Secrets
+
+``` bash
+kubectl get secret dev-db-secret -n micro-app-dev
+kubectl get secret test-db-secret -n micro-app-test
+kubectl get secret qa-db-secret -n micro-app-qa
+```
+
+Check the Secret key names without printing their values:
+
+``` bash
+kubectl get secret dev-db-secret -n micro-app-dev \
+  -o go-template='{{range $k, $v := .data}}{{printf "%s\n" $k}}{{end}}'
+```
+
+Expected key names:
+
+``` text
+DB_USERNAME
+DB_PASSWORD
+```
+
+Repeat for Test and QA:
+
+``` bash
+kubectl get secret test-db-secret -n micro-app-test \
+  -o go-template='{{range $k, $v := .data}}{{printf "%s\n" $k}}{{end}}'
+
+kubectl get secret qa-db-secret -n micro-app-qa \
+  -o go-template='{{range $k, $v := .data}}{{printf "%s\n" $k}}{{end}}'
+```
+
+If a Secret is missing, create it using your approved secure
+credential-handling process. Example syntax (replace the placeholders;
+do not commit real passwords to Git):
+
+``` bash
+kubectl create secret generic dev-db-secret \
+  --namespace micro-app-dev \
+  --from-literal=DB_USERNAME='dev_app' \
+  --from-literal=DB_PASSWORD='<DEV_DATABASE_PASSWORD>'
+```
+
+Use the corresponding username, password and namespace for Test and QA.
+If the Secret already exists, do not recreate it unnecessarily.
 
 ## 19. Test database connectivity from Kubernetes using ConfigMaps and Secrets
 
